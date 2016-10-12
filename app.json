@@ -7,5 +7,9 @@
     "sample",
     "example"
     "line bot"
-  ]
+  ],
+  "image": "heroku/go:1.6",
+  "mount_dir": "src/github.com/muchrm/line-go-bot",
+  "website": "http://github.com/muchrm/line-go-bot",
+  "repository": "http://github.com/muchrm/line-go-bot"
 }
