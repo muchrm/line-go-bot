@@ -34,7 +34,7 @@ func main() {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
 					userID := event.Source.UserID
-					if _, err = bot.PushMessage(userID, linebot.NewTextMessage(fmt.Sprintf("%s%s", message.Text, userID))).Do(); err != nil {
+					if _, err = bot.PushMessage(userID, linebot.NewTextMessage(fmt.Sprintf("%s: %s", userID, message.Text))).Do(); err != nil {
 						log.Print(err)
 					}
 				}
