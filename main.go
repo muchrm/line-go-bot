@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -32,7 +33,8 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					userID := event.Source.UserID
+					if _, err = bot.PushMessage(userID, linebot.NewTextMessage(fmt.Sprintf("%s%s", message.Text, userID))).Do(); err != nil {
 						log.Print(err)
 					}
 				}
