@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	users := []string{}
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
@@ -34,9 +34,17 @@ func main() {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
 					userID := event.Source.UserID
-					if _, err = bot.PushMessage(userID, linebot.NewTextMessage(fmt.Sprintf("%s: %s", userID, message.Text))).Do(); err != nil {
-						log.Print(err)
+
+					for _, user := range users {
+						if userID != user {
+							if _, err = bot.PushMessage(user, linebot.NewTextMessage(fmt.Sprintf("%s: %s", userID, message.Text))).Do(); err != nil {
+								log.Print(err)
+							}
+						}
 					}
+
+					users = append(users, userID)
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("ข้อความถูกส่งเรียบร้อยแล้ว")).Do()
 				}
 			}
 		}
