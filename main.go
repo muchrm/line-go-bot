@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -37,7 +36,7 @@ func main() {
 
 					for _, user := range users {
 						if userID != user {
-							if _, err = bot.PushMessage(user, linebot.NewTextMessage(fmt.Sprintf("%s: %s", userID, message.Text))).Do(); err != nil {
+							if _, err = bot.PushMessage(user, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 								log.Print(err)
 							}
 						}
