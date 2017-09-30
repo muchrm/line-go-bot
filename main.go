@@ -41,8 +41,9 @@ func main() {
 							}
 						}
 					}
-
-					users = append(users, userID)
+					if found, _ := inArray(userID, users); found != true {
+						users = append(users, userID)
+					}
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("ข้อความถูกส่งเรียบร้อยแล้ว")).Do()
 				}
 			}
@@ -53,4 +54,12 @@ func main() {
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
+}
+func inArray(val string, array []string) (ok bool, i int) {
+	for i = range array {
+		if ok = array[i] == val; ok {
+			return
+		}
+	}
+	return
 }
